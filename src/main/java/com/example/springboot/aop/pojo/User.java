@@ -1,15 +1,26 @@
 package com.example.springboot.aop.pojo;
 
+import com.example.springboot.aop.enumeration.SexEnum;
+
 public class User {
-    private String id;
+    private Long id;
     private String userName;
     private String note;
+    private SexEnum sex;
 
-    public String getId() {
+    public SexEnum getSex() {
+        return sex;
+    }
+
+    public void setSex(SexEnum sex) {
+        this.sex = sex;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

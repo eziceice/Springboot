@@ -16,7 +16,7 @@ public class UserController {
 
     @RequestMapping("/print")
     @ResponseBody
-    public User printUser(String id, String userName, String note)
+    public User printUser(Long id, String userName, String note)
     {
         User user = new User();
         user.setId(id);
