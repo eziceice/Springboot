@@ -1,6 +1,8 @@
 package com.example.springboot.aop.aspect;
 
+import com.example.springboot.aop.pojo.User;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
@@ -12,10 +14,17 @@ public class UserAspect {
     public void pointCut() {
     }
 
-    @Before("pointCut()")
-    public void before(JoinPoint joinPoint)
+    @Before("pointCut() && args(user)")
+    public void before(JoinPoint joinPoint, User user)
     {
         System.out.println("before.....");
+    }
+
+    @Around("pointCut()")
+    public void around(ProceedingJoinPoint jp) throws Throwable {
+        System.out.println("before around");
+        jp.proceed();
+        System.out.println("after around");
     }
 
     @After("pointCut()")
