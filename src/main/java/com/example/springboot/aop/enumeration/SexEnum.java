@@ -4,13 +4,19 @@ public enum SexEnum {
     MALE(1, "MALE"),
     FEMALE(2, "FEMALE");
 
+    public int getId() {
+        return id;
+    }
+
     private int id;
+
     private String name;
 
     SexEnum(int id, String name) {
         this.id = id;
         this.name = name;
     }
+
 
     public static SexEnum getEnumById(int id)
     {
@@ -20,21 +26,5 @@ public enum SexEnum {
                 return sex;
         }
         return null;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }

@@ -1,17 +1,17 @@
 package com.example.springboot.aop.service;
 
-import com.example.springboot.aop.pojo.User;
+import com.example.springboot.aop.pojo.UserJDBCTemplate;
 
 import java.util.List;
 
 public interface JdbcTemplateUserService {
-    User getUser(Long id);
+    UserJDBCTemplate getUser(Long id);
 
-    List<User> findUsers(String userName, String note);
+    List<UserJDBCTemplate> findUsers(String userName, String note);
 
-    int insertUser(User user);
+    int insertUser(UserJDBCTemplate userJDBCTemplate);
 
-    int updateUser(User user);
+    int updateUser(UserJDBCTemplate userJDBCTemplate);
 
     int deleteUser(Long id);
 }

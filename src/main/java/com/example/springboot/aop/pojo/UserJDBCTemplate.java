@@ -2,7 +2,7 @@ package com.example.springboot.aop.pojo;
 
 import com.example.springboot.aop.enumeration.SexEnum;
 
-public class User {
+public class UserJDBCTemplate {
     private Long id;
     private String userName;
     private String note;

@@ -1,10 +1,9 @@
 package com.example.springboot.aop.aspect;
 
-import com.example.springboot.aop.pojo.User;
+import com.example.springboot.aop.pojo.UserJDBCTemplate;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 @Aspect
@@ -14,8 +13,8 @@ public class UserAspect {
     public void pointCut() {
     }
 
-    @Before("pointCut() && args(user)")
-    public void before(JoinPoint joinPoint, User user)
+    @Before("pointCut() && args(userJDBCTemplate)")
+    public void before(JoinPoint joinPoint, UserJDBCTemplate userJDBCTemplate)
     {
         System.out.println("before.....");
     }

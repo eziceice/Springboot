@@ -1,7 +1,7 @@
 package com.example.springboot.aop.service;
 
-import com.example.springboot.aop.pojo.User;
+import com.example.springboot.aop.pojo.UserJDBCTemplate;
 
 public interface UserService {
-    void printUser(User user);
+    void printUser(UserJDBCTemplate userJDBCTemplate);
 }

@@ -1,6 +1,7 @@
 package com.example.springboot.aop.controller;
 
-import com.example.springboot.aop.pojo.User;
+import com.example.springboot.aop.pojo.UserJDBCTemplate;
+import com.example.springboot.aop.service.JdbcTemplateUserService;
 import com.example.springboot.aop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,15 +15,24 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private JdbcTemplateUserService jdbcTemplateUserService;
+
     @RequestMapping("/print")
     @ResponseBody
-    public User printUser(Long id, String userName, String note)
+    public UserJDBCTemplate printUser(Long id, String userName, String note) {
+        UserJDBCTemplate userJDBCTemplate = new UserJDBCTemplate();
+        userJDBCTemplate.setId(id);
+        userJDBCTemplate.setUserName(userName);
+        userJDBCTemplate.setNote(note);
+        userService.printUser(userJDBCTemplate);
+        return userJDBCTemplate;
+    }
+
+    @RequestMapping("get")
+    @ResponseBody
+    public UserJDBCTemplate getUser(Long id)
     {
-        User user = new User();
-        user.setId(id);
-        user.setUserName(userName);
-        user.setNote(note);
-        userService.printUser(user);
-        return user;
+        return jdbcTemplateUserService.getUser(id);
     }
 }
