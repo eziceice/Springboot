@@ -1,12 +1,11 @@
 package com.example.springboot.aop.pojo;
 
-import com.example.springboot.aop.converter.SexConverter;
 import com.example.springboot.aop.enumeration.SexEnum;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "user")
+@Entity(name = "user")
+@Table(name = "t_user")
 public class UserJpa {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
