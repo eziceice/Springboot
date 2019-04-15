@@ -4,8 +4,8 @@ import com.example.springboot.aop.enumeration.SexEnum;
 
 import javax.persistence.*;
 
-@Entity(name = "user")
-@Table(name = "t_user")
+//@Entity(name = "user")
+//@Table(name = "t_user")
 public class UserJpa {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)

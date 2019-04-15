@@ -3,7 +3,7 @@ package com.example.springboot.aop.service;
 import com.example.springboot.aop.pojo.UserJDBCTemplate;
 import org.springframework.stereotype.Service;
 
-@Service
+//@Service
 public class UserServiceImpl implements UserService{
 
     @Override
