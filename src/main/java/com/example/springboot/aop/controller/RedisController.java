@@ -1,8 +1,11 @@
 package com.example.springboot.aop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisZSetCommands;
 import org.springframework.data.redis.core.*;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -109,22 +112,123 @@ public class RedisController {
 
         zsetOps.add("value10", 0.26);
         Set<String> setRange = zsetOps.range(1,6);
+        System.out.println(setRange);
         Set<String> setScore = zsetOps.rangeByScore(0.2, 0.6);
-
+        System.out.println(setScore);
         RedisZSetCommands.Range range = new RedisZSetCommands.Range();
         range.gt("value3");
 
         range.lte("value8");
         Set<String> setLex = zsetOps.rangeByLex(range);
+        System.out.println(setLex);
         zsetOps.remove("value9", "value2");
 
         Double score = zsetOps.score("value8");
         Set<ZSetOperations.TypedTuple<String>> rangeSet = zsetOps.rangeWithScores(1, 6);
+        System.out.println(rangeSet);
         Set<ZSetOperations.TypedTuple<String>> scoreSet = zsetOps.rangeByScoreWithScores(1, 6);
+        System.out.println(scoreSet);
         Set<String> reverseSet = zsetOps.reverseRange(2, 8);
+        System.out.println(reverseSet);
 
         Map<String, Object> map = new HashMap<>();
         map.put("success", true);
         return map;
     }
+
+    @RequestMapping("/multi")
+    @ResponseBody
+    public Map<String, Object> testMulti()
+    {
+        redisTemplate.opsForValue().set("key1", "value1");
+        List list = (List)redisTemplate.execute(new SessionCallback() {
+            @Override
+            public Object execute(RedisOperations redisOperations) throws DataAccessException {
+                redisOperations.watch("key1");
+                // Start Redis Transaction
+                redisOperations.multi();
+                redisOperations.opsForValue().set("key2", "value2");
+                System.out.println(redisOperations.opsForValue().get("key2"));// result is null as the code is still in the queue
+                redisOperations.opsForValue().set("key3", "value3");
+                return redisOperations.exec();
+            }
+        });
+
+        System.out.println(list);
+        Map<String, Object> map = new HashMap<>();
+        map.put("success", true);
+        return map;
+    }
+
+    @RequestMapping("/pipeline")
+    @ResponseBody
+    public Map<String, Object> testPipeline()
+    {
+        Long start = System.currentTimeMillis();
+        List list = (List)redisTemplate.executePipelined(new SessionCallback() {
+            @Override
+            public Object execute(RedisOperations redisOperations) throws DataAccessException {
+                for (int i = 1; i <= 10000; i++)
+                {
+                    redisOperations.opsForValue().set("pipeline_ " + i, "value_" + i);
+                    String value = (String) redisOperations.opsForValue().get("pipeline_" + i);
+                    if (i == 10000)
+                    {
+                        System.out.println("Code is just in the execute order, null for any value :" + value);
+                    }
+                }
+                return null;
+            }
+        });
+
+        Long end = System.currentTimeMillis();
+        System.out.println("Time spent : " + (end - start));
+        Map<String, Object> map = new HashMap<>();
+        map.put("success", true);
+        return map;
+    }
+
+    @RequestMapping("/lua")
+    @ResponseBody
+    public Map<String, Object> testLua()
+    {
+        DefaultRedisScript<String> rs = new DefaultRedisScript<>();
+        rs.setScriptText("return 'Hello World'");
+        rs.setResultType(String.class);
+        RedisSerializer<String> stringRedisSerializer = redisTemplate.getStringSerializer();
+        String str = (String) redisTemplate.execute(rs, stringRedisSerializer, stringRedisSerializer, null);
+        Map<String, Object> map = new HashMap<>();
+        map.put("success", true);
+        return map;
+    }
+
+    @RequestMapping("/lua2")
+    @ResponseBody
+    public Map<String, Object> testLua2(String key1, String key2, String value1, String value2)
+    {
+        String lua = "redis.call('set', KEYS[1], ARGV[1] \n)"
+                + "redis.call('set', KEYS[2], ARGV[2] \n)"
+                + "local str1 = redis.call('get', KEYS[1]) \n"
+                + "local str2 = redis.call('get', KEYS[2]) \n"
+                + "if str1 == srt2 then \n"
+                + "return 1 \n"
+                + "end \n"
+                + "return 0 \n";
+
+        System.out.println(lua);
+        DefaultRedisScript<Long> rs = new DefaultRedisScript<>();
+        rs.setScriptText(lua);
+        rs.setResultType(Long.class);
+        RedisSerializer<String> redisSerializer = redisTemplate.getStringSerializer();
+
+        List<String> keyList = new ArrayList<>();
+        keyList.add(key1);
+        keyList.add(key2);
+
+        Long result = (Long) redisTemplate.execute(rs, redisSerializer, redisSerializer, keyList, value1, value2);
+        Map<String, Object> map = new HashMap<>();
+        map.put("success", true);
+        return map;
+    }
+
 }
