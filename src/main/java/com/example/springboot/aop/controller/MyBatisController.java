@@ -44,6 +44,33 @@ public class MyBatisController {
         return result;
     }
 
+    @RequestMapping("/findUsers")
+    @ResponseBody
+    public List<User> findUsers(String userName, String note)
+    {
+        return mybatisUserService.findUsers(userName, note);
+    }
+
+    @RequestMapping("/updateUserName")
+    @ResponseBody
+    public Map<String, Object> updateUserName(Long id, String userName)
+    {
+        User user = mybatisUserService.updateUserName(id, userName);
+        boolean flag = user != null;
+        String message = flag ? "Update successfully": "Update failure";
+        return resultMap(flag, message);
+    }
+
+    @RequestMapping("/deleteUser")
+    @ResponseBody
+    public Map<String, Object> deleteUser(Long id)
+    {
+        int result = mybatisUserService.deleteUser(id);
+        boolean flag = result == 1;
+        String message = flag ? "Delete successfully" : "Delete failure";
+        return resultMap(flag, message);
+    }
+
     @RequestMapping("/insertUsers")
     @ResponseBody
     public Map<String, Object> insertUsers(String userName1, String note1, String userName2, String note2)
@@ -61,6 +88,15 @@ public class MyBatisController {
         Map<String, Object> result = new HashMap<>();
         result.put("success", inserts!=0);
         result.put("user", userList);
+        return result;
+    }
+
+
+    private Map<String, Object> resultMap(boolean success, String message)
+    {
+        Map<String, Object> result = new HashMap<>();
+        result.put("success", success);
+        result.put("message", message);
         return result;
     }
 }

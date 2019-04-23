@@ -3,8 +3,10 @@ package com.example.springboot.aop.pojo;
 import com.example.springboot.aop.enumeration.SexEnum;
 import org.apache.ibatis.type.Alias;
 
+import java.io.Serializable;
+
 @Alias(value = "user")
-public class User {
+public class User implements Serializable {
 
     private Long id;
 

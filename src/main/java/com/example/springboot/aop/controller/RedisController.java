@@ -16,6 +16,7 @@ import java.util.*;
 @Controller
 @RequestMapping("/redis")
 public class RedisController {
+
     @Autowired
     private RedisTemplate redisTemplate;
 
