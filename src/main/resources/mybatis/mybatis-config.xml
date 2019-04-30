@@ -2,7 +2,7 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <plugins>
-        <plugin interceptor="com.example.springboot.aop.plugin.MyPlugin">
+        <plugin interceptor="com.example.springboot.core.plugin.MyPlugin">
             <property name="key1" value="value1"/>
             <property name="key2" value="value2"/>
             <property name="key3" value="value3"/>
