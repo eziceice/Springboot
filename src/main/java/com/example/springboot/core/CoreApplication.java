@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
@@ -24,12 +25,13 @@ import org.springframework.stereotype.Repository;
 import javax.annotation.PostConstruct;
 import java.time.Duration;
 
-//@EnableJpaRepositories("com.example.springboot.core.jpa.dao.*")
+//@EnableJpaRepositories("com.example.springboot.core.jpa.dao")
 //@EntityScan("com.example.springboot.aop.pojo")
 @MapperScan(basePackages = "com.example.springboot.core.mybatisredis.dao.*",
 sqlSessionFactoryRef = "sqlSessionFactory",
 sqlSessionTemplateRef = "sqlSessionTemplate",
 annotationClass = Repository.class)
+@EnableMongoRepositories(basePackages = "com.example.springboot.core.mongojpa.dao")
 @SpringBootApplication
 @EnableCaching
 public class CoreApplication {
