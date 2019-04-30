@@ -24,9 +24,9 @@ import org.springframework.stereotype.Repository;
 import javax.annotation.PostConstruct;
 import java.time.Duration;
 
-//@EnableJpaRepositories("com.example.springboot.aop.dao")
+//@EnableJpaRepositories("com.example.springboot.core.jpa.dao.*")
 //@EntityScan("com.example.springboot.aop.pojo")
-@MapperScan(basePackages = "com.example.springboot.aop.*",
+@MapperScan(basePackages = "com.example.springboot.core.mybatisredis.dao.*",
 sqlSessionFactoryRef = "sqlSessionFactory",
 sqlSessionTemplateRef = "sqlSessionTemplate",
 annotationClass = Repository.class)
