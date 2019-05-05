@@ -25,13 +25,13 @@ import org.springframework.stereotype.Repository;
 import javax.annotation.PostConstruct;
 import java.time.Duration;
 
-//@EnableJpaRepositories("com.example.springboot.core.jpa.dao")
+//@EnableJpaRepositories("com.example.springboot.core.relationaldb.jpa.dao")
 //@EntityScan("com.example.springboot.aop.pojo")
-@MapperScan(basePackages = "com.example.springboot.core.mybatisredis.dao.*",
+@MapperScan(basePackages = "com.example.springboot.core.relationaldb.mybatisredis.dao.*",
 sqlSessionFactoryRef = "sqlSessionFactory",
 sqlSessionTemplateRef = "sqlSessionTemplate",
 annotationClass = Repository.class)
-@EnableMongoRepositories(basePackages = "com.example.springboot.core.mongojpa.dao")
+@EnableMongoRepositories(basePackages = "com.example.springboot.core.mongodb.mongojpa.dao")
 @SpringBootApplication
 @EnableCaching
 public class CoreApplication {

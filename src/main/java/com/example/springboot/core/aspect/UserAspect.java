@@ -1,6 +1,6 @@
 package com.example.springboot.core.aspect;
 
-import com.example.springboot.core.jdbctemplate.pojo.UserJDBCTemplate;
+import com.example.springboot.core.relationaldb.jdbctemplate.pojo.UserJDBCTemplate;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class UserAspect {
-    @Pointcut("execution (* com.example.springboot.core.jdbctemplate.service.UserServiceImpl.printUser(..))")
+    @Pointcut("execution (* com.example.springboot.core.relationaldb.jdbctemplate.service.UserServiceImpl.printUser(..))")
     public void pointCut() {
     }
 
