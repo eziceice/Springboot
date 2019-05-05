@@ -16,4 +16,6 @@ public interface UserService {
     UpdateResult updateUser(Long id, String userName, String note);
 
     User getUser(Long id);
+
+    List<User> findUserByUsername(String userName);
 }

@@ -41,6 +41,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> findUserByUsername(String userName) {
+        Criteria criteria = Criteria.where("userName").regex(userName);
+        // Skip前skip个，并且最多返回limit个
+        Query query = Query.query(criteria);
+        List<User> users = mongoTemplate.find(query, User.class);
+        return users;
+    }
+
+    @Override
     public UpdateResult updateUser(Long id, String userName, String note) {
         Criteria criteriaId = Criteria.where("id").is(id);
         Query query = Query.query(criteriaId);
