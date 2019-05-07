@@ -1,15 +1,22 @@
 package com.example.springboot.core.mvc.controller;
 
 import com.example.springboot.core.mongodb.mongotemplate.pojo.User;
+import com.example.springboot.core.mongodb.mongotemplate.pojo.ValidatorPojo;
 import com.example.springboot.core.mongodb.mongotemplate.service.UserService;
 import com.example.springboot.core.mvc.utils.DoubleEditor;
+import com.example.springboot.core.mvc.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +31,8 @@ public class UserController {
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(Double.class, new DoubleEditor());
+        binder.setValidator(new UserValidator());
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), false));
     }
 
     @RequestMapping("/details")
@@ -58,11 +66,26 @@ public class UserController {
 
     @PostMapping("/format")
     @ResponseBody
-    public Map<String, Object> format(@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date date, Double number)
+    public Map<String, Object> format(@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date date, @NumberFormat(pattern = "$#,###.##") Double number)
     {
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("date", date);
         dataMap.put("number", number);
         return dataMap;
+    }
+
+    @GetMapping("/converter")
+    @ResponseBody
+    public User getUserByConverter(User user)
+    {
+        return user;
+    }
+
+    @PostMapping("/valid/validate")
+    @ResponseBody
+    public Map<String, Object> validate(@Valid @RequestBody ValidatorPojo vp)
+    {
+        Map<String, Object> map = new HashMap<>();
+        return map;
     }
 }
