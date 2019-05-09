@@ -103,7 +103,7 @@ public class CoreApplication implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry)
     {
         InterceptorRegistration ir = registry.addInterceptor(new Interceptor1());
-        ir.addPathPatterns("/interceptor/**");
+        ir.addPathPatterns("/session/**");
     }
 
 

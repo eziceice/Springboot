@@ -88,4 +88,11 @@ public class UserController {
         Map<String, Object> map = new HashMap<>();
         return map;
     }
+
+    @GetMapping("/header")
+    @ResponseBody
+    public String getHeader(@RequestHeader("id") Long id)
+    {
+        return id.toString();
+    }
 }

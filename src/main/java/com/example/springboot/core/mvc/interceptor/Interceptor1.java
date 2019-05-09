@@ -10,6 +10,7 @@ public class Interceptor1 implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        request.getSession().setAttribute("id", 2);
         System.out.println("Before Handler");
         return true; // Important - only true will execute rest flow
     }
