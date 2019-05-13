@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
-@SessionAttributes(names = {"user"}, types = User.class)
-@RequestMapping("/session")
+//@Controller
+//@SessionAttributes(names = {"user"}, types = User.class)
+//@RequestMapping("/session")
 public class SessionController {
 
     @Autowired

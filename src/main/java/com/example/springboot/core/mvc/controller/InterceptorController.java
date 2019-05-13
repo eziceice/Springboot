@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.HashMap;
 import java.util.Map;
 
-@Controller
-@RequestMapping("/interceptor")
+//@Controller
+//@RequestMapping("/interceptor")
 public class InterceptorController {
     @GetMapping("/start")
     @ResponseBody

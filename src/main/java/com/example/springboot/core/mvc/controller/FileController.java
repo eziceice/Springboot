@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-@Controller
+//@Controller
 public class FileController {
 
     //使用HttpServletRequest作为参数
