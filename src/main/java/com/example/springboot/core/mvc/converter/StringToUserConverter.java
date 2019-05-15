@@ -15,7 +15,6 @@ public class StringToUserConverter implements Converter<String, User> {
         String note = strArr[2];
         user.setId(id);
         user.setUserName(userName);
-        user.setNote(note);
         return user;
     }
 }

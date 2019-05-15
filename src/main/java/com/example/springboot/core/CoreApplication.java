@@ -27,6 +27,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.annotation.PostConstruct;
+import javax.sql.DataSource;
 import java.time.Duration;
 
 //@EnableJpaRepositories("com.example.springboot.core.relationaldb.jpa.dao")

@@ -15,6 +15,4 @@ public class Role implements Serializable {
 
     @Field("role_name")
     private String roleName;
-
-    private String note;
 }

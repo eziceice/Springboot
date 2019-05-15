@@ -13,14 +13,13 @@ import java.util.List;
 @Getter
 @Setter
 public class User implements Serializable {
-
     @Id
     private Long id;
 
     @Field("user_name")
     private String userName;
 
-    private String note;
+    private String password;
 
     private List<Role> roles;
 }
