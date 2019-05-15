@@ -34,12 +34,12 @@ public class MongoUserDetailService implements UserDetailsService {
         return changeToUser(user);
     }
 
-    private UserDetails changeToUser(User user)
-    {
+    private UserDetails changeToUser(User user) {
         List<GrantedAuthority> authorityList = new ArrayList<>();
-        GrantedAuthority authority = new SimpleGrantedAuthority("admin");
-        authorityList.add(authority);
-
+        for (Role role : user.getRoles()) {
+            GrantedAuthority authority = new SimpleGrantedAuthority(role.getRoleName());
+            authorityList.add(authority);
+        }
         UserDetails userDetails = new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(), authorityList);
         return userDetails;
     }
