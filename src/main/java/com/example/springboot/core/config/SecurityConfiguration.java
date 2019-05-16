@@ -41,8 +41,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/addUser").access("hasAuthority('ROLE_ADMIN')")
                 .anyRequest().permitAll()
                 .and().anonymous()
-                .and().formLogin()
-                .and().httpBasic();
+//                .and().formLogin().loginPage("/").defaultSuccessUrl("/admin/welcome")
+                .and().httpBasic()
+                //避免用户每次都需要输入密码，该值将放入cookie中并且以key：remember-me-key进行保存，保存之前通过MD5加密
+                .and().rememberMe().tokenValiditySeconds(86400).key("remember-me-key");
+//                .and().logout().logoutUrl("/").logoutSuccessUrl("/admin/logout")
+
+
 
         // 强制使用HTTPS和使用HTTP
 //        http.requiresChannel().antMatchers("/admin/**").requiresSecure()
