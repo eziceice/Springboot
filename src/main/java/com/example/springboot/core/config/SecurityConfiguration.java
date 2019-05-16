@@ -34,4 +34,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         auth.userDetailsService(mongoUserDetailService).passwordEncoder(passwordEncoder);
     }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests().antMatchers("/user/byName").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/user/addUser").access("hasAuthority('ROLE_ADMIN')")
+                .anyRequest().permitAll()
+                .and().anonymous()
+                .and().formLogin()
+                .and().httpBasic();
+
+        // 强制使用HTTPS和使用HTTP
+//        http.requiresChannel().antMatchers("/admin/**").requiresSecure()
+//                .and().requiresChannel().antMatchers("/user/**").requiresInsecure();
+    }
 }

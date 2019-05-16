@@ -9,7 +9,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,7 +36,7 @@ public class MongoUserDetailService implements UserDetailsService {
     private UserDetails changeToUser(User user) {
         List<GrantedAuthority> authorityList = new ArrayList<>();
         for (Role role : user.getRoles()) {
-            GrantedAuthority authority = new SimpleGrantedAuthority(role.getRoleName());
+            GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role.getRoleName());
             authorityList.add(authority);
         }
         UserDetails userDetails = new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(), authorityList);
