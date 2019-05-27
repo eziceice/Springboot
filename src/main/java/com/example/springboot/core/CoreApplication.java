@@ -20,6 +20,7 @@ import org.springframework.data.redis.listener.Topic;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.jms.annotation.EnableJms;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
@@ -27,6 +28,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.annotation.PostConstruct;
+import javax.jms.ConnectionFactory;
 import javax.sql.DataSource;
 import java.time.Duration;
 
@@ -39,6 +41,7 @@ annotationClass = Repository.class)
 @EnableMongoRepositories(basePackages = "com.example.springboot.core.mongodb.mongojpa.dao")
 @SpringBootApplication
 @EnableCaching
+@EnableJms
 public class CoreApplication implements WebMvcConfigurer {
 
     @Autowired
@@ -106,7 +109,6 @@ public class CoreApplication implements WebMvcConfigurer {
         InterceptorRegistration ir = registry.addInterceptor(new Interceptor1());
         ir.addPathPatterns("/session/**");
     }
-
 
     public static void main(String[] args) {
         SpringApplication.run(CoreApplication.class, args);

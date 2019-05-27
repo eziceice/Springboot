@@ -1,11 +1,17 @@
 package com.example.springboot.core.relationaldb.mybatisredis.pojo;
 
 import com.example.springboot.core.enumeration.SexEnum;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.apache.ibatis.type.Alias;
 
 import java.io.Serializable;
 
 @Alias(value = "user")
+@Getter
+@Setter
+@ToString
 public class User implements Serializable {
 
     private Long id;
