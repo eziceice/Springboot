@@ -1,8 +1,12 @@
 package com.example.springboot.core;
 
 import com.example.springboot.core.mvc.interceptor.Interceptor1;
+import com.rabbitmq.client.AMQP;
+import com.rabbitmq.client.impl.AMQImpl;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.amqp.core.Queue;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
@@ -109,6 +113,25 @@ public class CoreApplication implements WebMvcConfigurer {
         InterceptorRegistration ir = registry.addInterceptor(new Interceptor1());
         ir.addPathPatterns("/session/**");
     }
+
+    @Value("${rabbitmq.queue.msg}")
+    private String msgQueueName;
+
+    @Value("${rabbitmq.queue.user}")
+    private String userQueueName;
+
+    @Bean
+    public Queue createQueueMsg()
+    {
+        return new Queue(msgQueueName, true);
+    }
+
+    @Bean
+    public Queue createQueueUser()
+    {
+        return new Queue(userQueueName, true);
+    }
+
 
     public static void main(String[] args) {
         SpringApplication.run(CoreApplication.class, args);

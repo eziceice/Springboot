@@ -1,6 +1,6 @@
-package com.example.springboot.core.other.jms.controller;
+package com.example.springboot.core.other.message.controller;
 
-import com.example.springboot.core.other.jms.service.ActiveMqService;
+import com.example.springboot.core.other.message.service.ActiveMqService;
 import com.example.springboot.core.relationaldb.mybatisredis.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

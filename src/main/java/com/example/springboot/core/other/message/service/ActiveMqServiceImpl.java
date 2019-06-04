@@ -1,4 +1,4 @@
-package com.example.springboot.core.other.jms.service;
+package com.example.springboot.core.other.message.service;
 
 import com.example.springboot.core.relationaldb.mybatisredis.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
