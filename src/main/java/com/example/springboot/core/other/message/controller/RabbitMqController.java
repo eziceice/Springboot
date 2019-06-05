@@ -1,7 +1,7 @@
 package com.example.springboot.core.other.message.controller;
 
+import com.example.springboot.core.mongodb.mongotemplate.pojo.User;
 import com.example.springboot.core.other.message.service.RabbitMqService;
-import com.example.springboot.core.relationaldb.mybatisredis.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,20 +17,12 @@ public class RabbitMqController {
     @Autowired
     private RabbitMqService rabbitMqService;
 
-    @GetMapping("/msg")
-    public Map<String, Object> msg(String message)
-    {
-        rabbitMqService.sendMsg(message);
-        return result("message", message);
-    }
-
     @GetMapping("/user")
-    public Map<String, Object> user(Long id, String userName, String note)
+    public Map<String, Object> user(Long id, String userName)
     {
         User user = new User();
         user.setId(id);
         user.setUserName(userName);
-        user.setNote(note);
         rabbitMqService.sendUser(user);
         return result("user", user);
     }

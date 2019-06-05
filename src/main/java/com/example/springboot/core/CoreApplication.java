@@ -114,25 +114,6 @@ public class CoreApplication implements WebMvcConfigurer {
         ir.addPathPatterns("/session/**");
     }
 
-    @Value("${rabbitmq.queue.msg}")
-    private String msgQueueName;
-
-    @Value("${rabbitmq.queue.user}")
-    private String userQueueName;
-
-    @Bean
-    public Queue createQueueMsg()
-    {
-        return new Queue(msgQueueName, true);
-    }
-
-    @Bean
-    public Queue createQueueUser()
-    {
-        return new Queue(userQueueName, true);
-    }
-
-
     public static void main(String[] args) {
         SpringApplication.run(CoreApplication.class, args);
     }
