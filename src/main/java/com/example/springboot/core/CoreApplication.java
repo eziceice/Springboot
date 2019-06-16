@@ -25,6 +25,7 @@ import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.jms.annotation.EnableJms;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
@@ -46,6 +47,7 @@ annotationClass = Repository.class)
 @SpringBootApplication
 @EnableCaching
 @EnableJms
+@EnableScheduling
 public class CoreApplication implements WebMvcConfigurer {
 
     @Autowired
