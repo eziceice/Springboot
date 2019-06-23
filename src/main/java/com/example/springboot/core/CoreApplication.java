@@ -8,10 +8,13 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
@@ -39,15 +42,16 @@ import java.time.Duration;
 
 //@EnableJpaRepositories("com.example.springboot.core.relationaldb.jpa.dao")
 //@EntityScan("com.example.springboot.aop.pojo")
-@MapperScan(basePackages = "com.example.springboot.core.relationaldb.mybatisredis.dao.*",
-sqlSessionFactoryRef = "sqlSessionFactory",
-sqlSessionTemplateRef = "sqlSessionTemplate",
-annotationClass = Repository.class)
-@EnableMongoRepositories(basePackages = "com.example.springboot.core.mongodb.mongojpa.dao")
+//@MapperScan(basePackages = "com.example.springboot.core.relationaldb.mybatisredis.dao.*",
+//sqlSessionFactoryRef = "sqlSessionFactory",
+//sqlSessionTemplateRef = "sqlSessionTemplate",
+//annotationClass = Repository.class)
+//@EnableMongoRepositories(basePackages = "com.example.springboot.core.mongodb.mongojpa.dao")
 @SpringBootApplication
+@EnableReactiveMongoRepositories
 @EnableCaching
 @EnableJms
-@EnableScheduling
+//@EnableScheduling
 public class CoreApplication implements WebMvcConfigurer {
 
     @Autowired
