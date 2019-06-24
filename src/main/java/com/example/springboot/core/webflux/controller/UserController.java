@@ -54,4 +54,10 @@ public class UserController {
         userVo.setSexName(webFluxUser.getSexEnum().getName());
         return userVo;
     }
+
+    @PostMapping("/user2/{user}")
+    public Mono<UserVo> insertUser2(@PathVariable("user") WebFluxUser webFluxUser)
+    {
+        return userService.insertUser(webFluxUser).map(this::translate);
+    }
 }

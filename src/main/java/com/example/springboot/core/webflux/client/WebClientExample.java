@@ -66,4 +66,15 @@ public class WebClientExample {
         Void voidResult = result.block();// Request will be triggered when block method is invoked
         System.out.println(voidResult);
     }
+
+    private static void insertUser2(WebClient client)
+    {
+        Mono<UserVo> userVoMono = client.post()
+                .uri("/user2/{user}", "3-covert-0-note")
+                .accept(MediaType.APPLICATION_STREAM_JSON)
+                .retrieve()
+                .bodyToMono(UserVo.class);
+        UserVo userVo = userVoMono.block();
+        System.out.println(userVo.getUserName());
+    }
 }
