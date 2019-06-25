@@ -2,12 +2,16 @@ package com.example.springboot.core.webflux.controller;
 
 import com.example.springboot.core.webflux.pojo.WebFluxUser;
 import com.example.springboot.core.webflux.service.UserService;
+import com.example.springboot.core.webflux.validator.UserValidator;
 import com.example.springboot.core.webflux.vo.UserVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.DataBinder;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/users")
@@ -15,6 +19,16 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    /**
+     * Controller Validator
+     * @param dataBinder
+     */
+    @InitBinder
+    public void initBinder(DataBinder dataBinder)
+    {
+        dataBinder.setValidator(new UserValidator());
+    }
 
     @GetMapping("/{id}")
     public Mono<UserVo> getUser(@PathVariable long id)
@@ -59,5 +73,11 @@ public class UserController {
     public Mono<UserVo> insertUser2(@PathVariable("user") WebFluxUser webFluxUser)
     {
         return userService.insertUser(webFluxUser).map(this::translate);
+    }
+
+    @PostMapping("/user3")
+    public Mono<UserVo> insertUser3(@Valid @RequestBody WebFluxUser user)
+    {
+        return userService.insertUser(user).map(this::translate);
     }
 }

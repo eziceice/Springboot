@@ -1,5 +1,6 @@
 package com.example.springboot.core.webflux.client;
 
+import com.example.springboot.core.webflux.pojo.UserPojo;
 import com.example.springboot.core.webflux.pojo.WebFluxUser;
 import com.example.springboot.core.webflux.vo.UserVo;
 import org.springframework.http.MediaType;
@@ -67,8 +68,7 @@ public class WebClientExample {
         System.out.println(voidResult);
     }
 
-    private static void insertUser2(WebClient client)
-    {
+    private static void insertUser2(WebClient client) {
         Mono<UserVo> userVoMono = client.post()
                 .uri("/user2/{user}", "3-covert-0-note")
                 .accept(MediaType.APPLICATION_STREAM_JSON)
@@ -76,5 +76,50 @@ public class WebClientExample {
                 .bodyToMono(UserVo.class);
         UserVo userVo = userVoMono.block();
         System.out.println(userVo.getUserName());
+    }
+
+    public static void getUser2(WebClient client, Long id) {
+        Mono<UserVo> userVoMono = client.get()
+                .uri("/users/{id}", id)
+                .header("id", id + "")
+                .header("username", "username")
+                .accept(MediaType.APPLICATION_STREAM_JSON)
+                .retrieve().onStatus(httpStatus -> httpStatus.is4xxClientError() || httpStatus.is5xxServerError(),
+                        clientResponse -> Mono.empty())
+                .bodyToMono(UserVo.class);
+        UserVo userVo = userVoMono.block();
+        if (userVo != null) {
+            System.out.println(userVo.getUserName());
+        } else {
+            System.out.println("Error!");
+        }
+    }
+
+    private static UserPojo translate(UserVo userVo) {
+        if (userVo == null) {
+            return null;
+        }
+        UserPojo userPojo = new UserPojo();
+        userPojo.setId(userVo.getId());
+        userPojo.setUserName(userVo.getUserName());
+        userPojo.setSex(userVo.getSexCode());
+        userPojo.setNote(userVo.getNote());
+        return userPojo;
+    }
+
+    public static void getUserPojo(WebClient webClient, Long id) {
+        Mono<UserPojo> userPojoMono = webClient.get()
+                .uri("/users/{id}", id).accept(MediaType.APPLICATION_STREAM_JSON)
+                .exchange()
+                .doOnError(ex -> Mono.empty())
+                .flatMap(clientResponse -> clientResponse.bodyToMono(UserVo.class))
+                .map(WebClientExample::translate);
+        UserPojo pojo = userPojoMono.block();
+
+        if (pojo != null) {
+            System.out.println(pojo.getUserName());
+        } else {
+            System.out.println("Error!");
+        }
     }
 }
