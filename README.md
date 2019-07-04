@@ -1,2 +1,2 @@
 # Spring Boot
-Study notes and code examples for SpringBoot and Spring
+Study notes and code examples for Spring Boot and Spring
